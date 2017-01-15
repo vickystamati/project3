@@ -4,6 +4,7 @@
 #include <math.h>
 #include "drmsd.h"
 #include <time.h>
+#include <assert.h>
 #define bufSize 2048
 
 int drmsdmethod(double ***input,int tablescounter,int rows)
@@ -24,8 +25,8 @@ int drmsdmethod(double ***input,int tablescounter,int rows)
 	disttable=malloc(size*sizeof(double*));
 	for(i=0;i<size;i++)
 		disttable[i]=malloc(3*sizeof(double));
-	distancesort(firstm,disttable,size,rows);
-	clustering(input,disttable,tablescounter,rows,r);
+	assert(distancesort(firstm,disttable,size,rows));
+	assert(clustering(input,disttable,tablescounter,rows,r));
 	for(i=0;i<rows;i++)
 		free(firstm[i]);
 	free(firstm);
@@ -190,8 +191,8 @@ int clustering(double ***input,double ** disttable,int tablescounter,int rows,in
 					}
 				}
 				start=clock();
-				kmeansstart(clist,input,matrix,centmatrix,tablescounter,rows,cent,num[loop]);
-				kmeansmethod(clist, input,matrix,centmatrix,tablescounter,rows,num[loop],cent,disttable,choice);
+				assert(kmeansstart(clist,input,matrix,centmatrix,tablescounter,rows,cent,num[loop]));
+				assert(kmeansmethod(clist, input,matrix,centmatrix,tablescounter,rows,num[loop],cent,disttable,choice));
 				end=clock();
 				tempsilh=drmsdsilhouette(clist,matrix,centmatrix,cent,num[loop]);
 				if(tempsilh<silh[point])//ama vrei kalitero
@@ -251,7 +252,7 @@ int meanspam(double *** input,struct clustlist * clist,int tablescounter,int row
 			for(j=0;j<cent;j++)
 				pammatr[j][1]=drmsd(matrix,centmatrix,k,j,num);
 			bubble_sort2d(pammatr, cent);
-			insertassig(pammatr,clist,k,input,rows);
+			assert(insertassig(pammatr,clist,k,input,rows));
 		}
 	}
 	for(i=0;i<cent;i++)
@@ -325,7 +326,7 @@ int kmeansmethod(struct clustlist * clist,double *** input,double ** matrix,doub
 	for(i=0;i<cent;i++)
 		finalcentmatrix[i]=malloc(num*sizeof(double));
 	idn=tablescounter+1;
-	meanspam(input,clist,tablescounter,rows,cent,matrix,centmatrix,num);
+	assert(meanspam(input,clist,tablescounter,rows,cent,matrix,centmatrix,num));
 	jsum1=calcj(clist,cent);
 	clistfinal=malloc(cent*sizeof(struct clustlist));
 	for(i=0;i<cent;i++)//desmevei ta kentroidi
@@ -395,7 +396,7 @@ int kmeansmethod(struct clustlist * clist,double *** input,double ** matrix,doub
 						finalcentmatrix[j][z]=centmatrix[j][z];
 				}
 			}
-			meanspam(input,clistfinal,tablescounter,rows,cent,matrix,finalcentmatrix,num);
+			assert(meanspam(input,clistfinal,tablescounter,rows,cent,matrix,finalcentmatrix,num));
 			jsum2=calcj(clistfinal,cent);
 			if(jsum2<jsum1)
 			{

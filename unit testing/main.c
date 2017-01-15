@@ -6,6 +6,7 @@
 #include "clrec.h"
 #include <string.h>
 #include "nnlsh.h"
+#include <assert.h>
 #define bufSize 2048
 
 int main(int argc, char *argv[])
@@ -53,7 +54,7 @@ int main(int argc, char *argv[])
 			}
 			readfile(fp,tablescounter,rows,input,inputbig);
 			fclose(fp);
-			crmsdmethod(input,inputbig,tablescounter,rows);
+			assert(crmsdmethod(input,inputbig,tablescounter,rows));
 			for(i=0;i<tablescounter;i++)
 			{
 				for(j=0;j<rows;j++)
@@ -75,7 +76,6 @@ int main(int argc, char *argv[])
 			tablescounter=atoi(buflen);
 			fscanf(fp, "%s", buflen);
 			rows=atoi(buflen);
-			printf("%d %d\n",tablescounter,rows);
 			input=malloc(tablescounter*sizeof(double**));
 			inputbig=malloc(tablescounter*sizeof(double**));
 			for(i=0;i<tablescounter;i++)
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 			}
 			readfile(fp,tablescounter,rows,input,inputbig);
 			fclose(fp);
-			drmsdmethod(input,tablescounter,rows);
+			assert(drmsdmethod(input,tablescounter,rows));
 			for(i=0;i<tablescounter;i++)
 			{
 				for(j=0;j<rows;j++)
@@ -113,9 +113,9 @@ int main(int argc, char *argv[])
 		printf("Press 0 for NN-LSH or 1 for Clustering\n");
 		scanf("%d",&choice);
 		if(choice==0)
-			nnlsh(argv[2],argv[4],val);
+			assert(nnlsh(argv[2],argv[4],val));
 		else if(choice==1)
-			clusrec(argv[2],argv[4],val);
+			assert(clusrec(argv[2],argv[4],val));
 		else
 			printf("WRONG CHOICE!\n");
 	}

@@ -6,6 +6,7 @@
 #include "lapacke.h"
 #include "drmsd.h"
 #include <time.h>
+#include <assert.h>
 #define bufSize 2048
 
 int readfile(FILE *fp,int tablescounter,int rows,double ***input,double ***inputbig)
@@ -249,7 +250,7 @@ int claraf(struct clustlist * clist , double *** input,double *** inputbig,int r
 				clist[i].key[z][m]=input[randmatr[i]][z][m];
 		i++;
 	}
-	medpam(input,inputbig,clist,tablescounter,rows,cent,listmatr,nnum);
+	assert(medpam(input,inputbig,clist,tablescounter,rows,cent,listmatr,nnum));
 	jval=calcj(clist ,cent);
 	clistfinal=malloc(cent*sizeof(struct clustlist));
 	clisttemp=malloc(cent*sizeof(struct clustlist));
@@ -290,7 +291,7 @@ int claraf(struct clustlist * clist , double *** input,double *** inputbig,int r
 								clisttemp[m].key[z][r]=clist[m].key[z][r];
 					}
 				}
-				medpam(input,inputbig,clisttemp,tablescounter,rows,cent,listmatr,nnum);
+				assert(medpam(input,inputbig,clisttemp,tablescounter,rows,cent,listmatr,nnum));
 				jtemp=calcj(clisttemp ,cent);
 				if(jtemp<jval)
 				{
@@ -312,11 +313,11 @@ int claraf(struct clustlist * clist , double *** input,double *** inputbig,int r
 		freeclustlist(clist,cent,rows);
 		swapclist(clist,clistfinal,cent,rows);
 	}
-	freeclustlist(clisttemp,cent,rows);
-	freeclustlist(clistfinal,cent,rows);
-	freeclustlist(clist,cent,rows);
+	assert(freeclustlist(clisttemp,cent,rows));
+	assert(freeclustlist(clistfinal,cent,rows));
+	assert(freeclustlist(clist,cent,rows));
 		
-	medpam(input,inputbig,clist,tablescounter,rows,cent,listmatr,0);
+	assert(medpam(input,inputbig,clist,tablescounter,rows,cent,listmatr,0));
 
 	for(i=0;i<cent;i++)
 	{
@@ -339,7 +340,7 @@ int claraf(struct clustlist * clist , double *** input,double *** inputbig,int r
 int clara(struct clustlist * clist,double *** input,double *** inputbig,int rows,int tablescounter,int cent)
 {
 	struct clustlist*clistptr;
-	int i,j,s=4;//apo theoria
+	int i,j,s=5;//apo theoria
 	double jsum,jsumclara;
 	clistptr=malloc(cent*sizeof(struct clustlist));
 	for(i=0;i<cent;i++)
@@ -351,7 +352,7 @@ int clara(struct clustlist * clist,double *** input,double *** inputbig,int rows
 	}
 	for(i=0;i<s;i++)
 	{
-		claraf(clistptr,input,inputbig,rows,tablescounter,cent);
+		assert(claraf(clistptr,input,inputbig,rows,tablescounter,cent));
 		if(i==0)
 		{
 			jsumclara=calcj(clistptr ,cent );
