@@ -148,11 +148,11 @@ int nnlsh(char * input, char * output,int val)
 		error=error/10;
 		fp=fopen(output,"w");
 		if(choice==0)
-			fprintf(fp,"Hamming NN-LSH\n");
+			fprintf(fp,"Hamming NN-LSH  ");
 		else if(choice==1)
-			fprintf(fp,"Cosine NN-LSH\n");
+			fprintf(fp,"Cosine NN-LSH  ");
 		else if(choice==2)
-			fprintf(fp,"Euclidean NN-LSH\n");
+			fprintf(fp,"Euclidean NN-LSH  ");
 		fprintf(fp,"MAE: %f\n",error);
 		fclose(fp);
 	}
@@ -184,9 +184,6 @@ int hamminglsh(struct hashtable * hasht,double **matrix,int idnum,int prodnum,st
 		for(j=0;j<idnum;j++)
 			nearest[i][j]=malloc(P*sizeof(int));
 	}
-	//gfun=malloc(L*sizeof(int*));	
-	//for(i=0;i<L;i++)//kataskevazoyme ti sinartisi g
-	//	gfun[i]=malloc(k*sizeof(int));
 	for(i=0;i<L;i++)
 		for(j=0;j<k;j++)
 			gfun[i][j]=rand()%(prodnum-5)+1;
@@ -212,7 +209,7 @@ int hamminglsh(struct hashtable * hasht,double **matrix,int idnum,int prodnum,st
 		}
 	}
 	radius=firstradham(matrix,prodnum);
-	loop=0;
+	//loop=0;
 	for(y=0;y<loop;y++)//paradoxi 5 epanalipsewn,se periptwsi pou den to vrei,tha kanei mia ekti kai tha valei ta P prwta
 	{	
 		for(z=0;z<idnum;z++)
@@ -345,8 +342,8 @@ int cosinelsh(struct hashtable * hasht,double **matrix,int idnum,int prodnum,str
 			insertht(&hasht[i].lista[fbin],z+1);
 		}
 	}
-	radius=1;
-	loop=0;
+	radius=2;
+	//loop=0;
 	for(m=0;m<loop;m++)//paradoxi 5 epanalipsewn,se periptwsi pou den to vrei,tha kanei mia ekti kai tha valei ta P prwta
 	{	
 		for(z=0;z<idnum;z++)
@@ -390,6 +387,7 @@ int cosinelsh(struct hashtable * hasht,double **matrix,int idnum,int prodnum,str
 		else//alliws kanei to flag 0 kai kanei mia extra epanalipsi gia na valei ta prwta P pou tha sinantisei
 			flag=0;
 	}
+	if (flag==0)
 	radius=40;
 	for(z=0;z<idnum;z++)
 	{
@@ -503,7 +501,7 @@ int euclideanlsh(struct hashtable * hasht,double **matrix,int idnum,int prodnum,
 	radius=eucldistanceclu(matrix,10,1000,prodnum,suser);
 	if(radius==0)
 		radius+=5;
-	loop=0;
+	//loop=0;
 	for(y=0;y<loop;y++)//paradoxi 5 epanalipsewn,se periptwsi pou den to vrei,tha kanei mia ekti kai tha valei ta P prwta
 	{	
 		for(m=0;m<idnum;m++)

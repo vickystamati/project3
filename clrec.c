@@ -125,11 +125,11 @@ int clusrec(char* filename,char*output,int val)
 		error=error/10;
 		fp=fopen(output,"w");
 		if(choice==0)
-			fprintf(fp,"Hamming NN-LSH\n");
+			fprintf(fp,"Hamming NN-LSH  ");
 		else if(choice==1)
-			fprintf(fp,"Cosine NN-LSH\n");
+			fprintf(fp,"Cosine NN-LSH  ");
 		else if(choice==2)
-			fprintf(fp,"Euclidean NN-LSH\n");
+			fprintf(fp,"Euclidean NN-LSH  ");
 		fprintf(fp,"MAE: %f\n",error);
 		fclose(fp);
 	}
@@ -143,7 +143,7 @@ int clusteringmethod(int ** matrix,double ** finalmatrix,int productnum,int idnu
 	int knum=20,cent,loop,bestcent,*matr,counter,i,j;
 	double silh,bestsilh;
 	srand(time(NULL));
-	for(loop=0;loop<1;loop++)
+	for(loop=0;loop<10;loop++)
 	{
 		cent=rand() %knum+5;
 		clist=malloc(cent*sizeof(struct clustlist));
@@ -186,7 +186,7 @@ int clusteringmethod(int ** matrix,double ** finalmatrix,int productnum,int idnu
 int claramethod(struct clustlist * clist,int ** matrix,double ** finalmatrix,int productnum,int idnum,int cent,struct user * suser)
 {
 	struct clustlist*clistptr;
-	int i,j,s=1;//apo theoria
+	int i,j,s=2;//apo theoria
 	double jsum,jsumclara;
 	clistptr=malloc(cent*sizeof(struct clustlist));
 	for(i=0;i<cent;i++)
@@ -946,7 +946,7 @@ void readfile(char * filename,int idnum,int prodnum)
 	while(fscanf(fp, "%s %s %s", buf1,buf2,buf3)!=EOF)
 	{
 		if(strcmp(last,buf1)==0)
-			//printf("a ");
+			
 			i=0;
 		else
 			countid++;

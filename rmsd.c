@@ -107,7 +107,7 @@ double crmsd(int tablescounter,int rows,double ***inputbig,int pos1,int pos2)
 	{
 		printf("error with S\n");
 		//sleep(2);
-		return -1;//termatise
+		//return -1;//termatise
 	}
 	cblas_dgemm (CblasRowMajor, CblasNoTrans,CblasNoTrans,3,3,3,1.0,vt,3,utable,3,0.0,q,3);
 	detq=(q[0]*q[4]*q[8])+(q[1]*q[5]*q[6])+(q[2]*q[3]*q[7])-(q[2]*q[4]*q[6])-(q[1]*q[3]*q[8])-(q[0]*q[5]*q[7]);

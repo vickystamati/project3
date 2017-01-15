@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 			tablescounter=atoi(buflen);
 			fscanf(fp, "%s", buflen);
 			rows=atoi(buflen);
-			printf("%d %d\n",tablescounter,rows);
+			//printf("%d %d\n",tablescounter,rows);
 			input=malloc(tablescounter*sizeof(double**));
 			inputbig=malloc(tablescounter*sizeof(double**));
 			for(i=0;i<tablescounter;i++)
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 			tablescounter=atoi(buflen);
 			fscanf(fp, "%s", buflen);
 			rows=atoi(buflen);
-			printf("%d %d\n",tablescounter,rows);
+			//printf("%d %d\n",tablescounter,rows);
 			input=malloc(tablescounter*sizeof(double**));
 			inputbig=malloc(tablescounter*sizeof(double**));
 			for(i=0;i<tablescounter;i++)
